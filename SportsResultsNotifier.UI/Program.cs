@@ -1,2 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using SportsResultsNotifier.UI.Services;
+
+using var httpClient = new HttpClient();
+var scraper = new ScraperService(httpClient);
+
+var results = await scraper.GetResultsAsync();
+
+Console.WriteLine(results);
