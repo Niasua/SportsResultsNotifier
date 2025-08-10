@@ -89,6 +89,5 @@ public static class MainMenu
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
         }
-
     }
 }
