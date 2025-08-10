@@ -12,15 +12,15 @@ It uses **Html Agility Pack** for web scraping and **System.Net.Mail** for sendi
 - Modular code structure for easy maintenance.
 
 ---
-Configuration
+
+## Configuration
+
 This project requires an appsettings.json file in the root directory.
 This file is not included in the repository for security reasons.
 
 Create a file named appsettings.json with the following structure:
 
 ```json
-Copiar
-Editar
 {
   "Smtp": {
     "Host": "smtp.example.com",
