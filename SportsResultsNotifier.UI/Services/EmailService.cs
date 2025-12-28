@@ -1,36 +1,28 @@
-﻿using System.Net;
+﻿using Microsoft.Extensions.Options;
+using SportsResultsNotifier.UI.Settings;
+using System.Net;
 using System.Net.Mail;
 
 namespace SportsResultsNotifier.UI.Services;
 
 public class EmailService
 {
-    private readonly string _smtpServer;
-    private readonly int _port;
-    private readonly string _username;
-    private readonly string _password;
-    private readonly string _from;
-    private readonly bool _enableSsl;
+    private readonly EmailSettings _settings;
 
-    public EmailService(string smtpServer, int port, string username, string password, string from, bool enableSsl)
+    public EmailService(IOptions<EmailSettings> options)
     {
-        _smtpServer = smtpServer;
-        _port = port;
-        _username = username;
-        _password = password;
-        _from = from;
-        _enableSsl = enableSsl;
+        _settings = options.Value;
     }
 
     public async Task SendEmailAsync(string to, string subject, string body)
     {
-        using var smtp = new SmtpClient(_smtpServer, _port)
+        using var smtp = new SmtpClient(_settings.SmtpServer, _settings.Port)
         {
-            Credentials = new NetworkCredential(_username, _password),
-            EnableSsl = _enableSsl
+            Credentials = new NetworkCredential(_settings.Username, _settings.Password),
+            EnableSsl = _settings.EnableSsl
         };
 
-        var mail = new MailMessage(_from, to, subject, body);
+        var mail = new MailMessage(_settings.From, to, subject, body);
 
         await smtp.SendMailAsync(mail);
     }
